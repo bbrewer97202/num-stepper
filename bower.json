@@ -1,0 +1,23 @@
+{
+  "name": "num-stepper",
+  "version": "0.0.1",
+  "description": "HTML custom element with up/down buttons for numeric range entry",
+  "authors": [
+    "bbrewer97202@gmail.com>"
+  ],
+  "keywords": [
+    "custom-element",
+    "web-components",
+    "stepper",
+    "numeric"
+  ],  
+  "main": "num-stepper.html",
+  "homepage": "https://github.com/bbrewer97202/num-stepper",
+  "license": "MIT",
+  "ignore": [
+    "**/.*"
+  ],
+  "dependencies": {
+    "webcomponents.js": "~0.5.1"
+  }
+}

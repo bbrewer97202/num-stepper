@@ -1,0 +1,112 @@
+<script>
+
+var numericStepperPrototype = Object.create(HTMLElement.prototype);
+
+/**
+ * create the DOM structure
+ * @return {DOM Element} 
+ */
+numericStepperPrototype.createUI = function() {
+
+	var stepper = document.createElement('div');
+	stepper.addEventListener('click', this.onElementClick.bind(this), false);
+
+	var increment = document.createElement('button');
+	increment.innerHTML = "+";
+	increment.classList.add('stepper-increment');
+	stepper.appendChild(increment);
+
+	var decrement = document.createElement('button');
+	decrement.innerHTML = "-";
+	decrement.classList.add('stepper-decrement');
+	stepper.appendChild(decrement);
+
+	return stepper;
+};
+
+/**
+ * handle clicks/taps to the element
+ * @param  {object} e event object
+ */
+numericStepperPrototype.onElementClick = function(e) {
+
+	e.preventDefault();
+
+	var startingValue = this.data.value;
+
+	if (this.hasClass(e.target, 'stepper-increment')) {
+		if ((this.data.value + this.data.step) <= this.data.max) {
+			this.data.value += this.data.step;
+		}
+	} else if (this.hasClass(e.target, 'stepper-decrement')) {
+		if ((this.data.value - this.data.step) >= this.data.min) {
+			this.data.value -= this.data.step;
+		}
+	}
+
+	//broadcast change event if the value is different
+	if (startingValue !== this.data.value) {
+		this.setAttribute('value', this.data.value);
+		var event = new CustomEvent('change', { detail: this.data });			
+		this.dispatchEvent(event);
+	}
+};
+
+/**
+ * determine if the element has the passed classname
+ * @param  {element}  el        the element to search for the classname on
+ * @param  {string}  className  name of the class to search for
+ * @return {Boolean}           [description]
+ */
+numericStepperPrototype.hasClass = function(el, className) {
+	return el.className.indexOf(className) !== -1;
+};
+
+/**
+ * return specified element attribute or default
+ * @param  {string} attr         name of the attribute to get
+ * @param  {string} defaultValue return this value if attribute not specfied
+ * @return {number}              returns int or float
+ */
+numericStepperPrototype.elementAttribute = function(attr, defaultValue) {
+	var value = this.getAttribute(attr);
+	if (typeof value === undefined) {
+		return defaultValue;
+	} else {
+		if ((Number(value) === value) && (value % 1 === 0)) {
+			return parseInt(value,10);
+		} else {
+			return parseFloat(value);
+		}
+	}
+}
+
+numericStepperPrototype.createdCallback = function(e) {
+
+	this.data = {
+		min: this.elementAttribute.call(this, 'min', 1),
+		max: this.elementAttribute.call(this, 'max', 10),
+		value: this.elementAttribute.call(this, 'value', 1),
+		step: this.elementAttribute.call(this, 'step', 1)
+	};
+
+	//debug
+	console.log("data", this.data);
+
+	//value cannot be greater than maximum value
+	if (this.data.value > this.data.max) {
+		throw "Stepper value cannot be larger than stepper maximum.";
+	}
+
+    //create UI
+    this.shadowRoot = this.createShadowRoot();    
+    this.shadowRoot.appendChild(this.createUI());
+
+	//initialization complete event
+	var event = new CustomEvent('ready', { detail: this.data });			
+	this.dispatchEvent(event);
+}
+
+document.registerElement('num-stepper', { prototype: numericStepperPrototype });
+
+</script>
