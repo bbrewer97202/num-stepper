@@ -81,6 +81,9 @@ numericStepperPrototype.elementAttribute = function(attr, defaultValue) {
 	}
 }
 
+/**
+ * custom element created callback
+ */
 numericStepperPrototype.createdCallback = function(e) {
 
 	this.data = {
@@ -89,9 +92,6 @@ numericStepperPrototype.createdCallback = function(e) {
 		value: this.elementAttribute.call(this, 'value', 1),
 		step: this.elementAttribute.call(this, 'step', 1)
 	};
-
-	//debug
-	console.log("data", this.data);
 
 	//value cannot be greater than maximum value
 	if (this.data.value > this.data.max) {

@@ -1,6 +1,6 @@
 # &lt;num-stepper&gt;
 
-HTML custom element with up/down buttons for numeric range entry.
+HTML custom element for numeric range entry.
 
 ## Demo
 [See demo](http://bbrewer97202.github.io/num-stepper/demo.html)

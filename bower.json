@@ -1,7 +1,7 @@
 {
   "name": "num-stepper",
   "version": "0.0.1",
-  "description": "HTML custom element with up/down buttons for numeric range entry",
+  "description": "HTML custom element for numeric range entry",
   "authors": [
     "bbrewer97202@gmail.com>"
   ],
