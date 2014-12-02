@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<!-- import polyfils for browsers without native support -->
+	<script type="text/javascript" src="bower_components/webcomponents.js/webcomponents.min.js"></script>
+    
+    <!-- import the custom element -->
+    <link rel="import" href="num-stepper.html"> 
+
+</head>
+<body>
+
+<style type="text/css">
+body {
+	font-family: sans-serif;
+}
+h1 {
+	font-size: 1em;
+}
+span, num-stepper { 
+	display: inline-block;
+}	
+pre {
+	padding: 1em; 
+	background-color: #eee;
+	border: solid 1px #ccc;
+}
+</style>
+
+<h1>&lt;num-stepper&gt;</h1>
+
+<num-stepper class="num-stepper1" min="5" max="18" step="1" value="9"></num-stepper>
+<span class="debug"></span>
+
+<pre>
+&lt;num-stepper class="num-stepper1" min="5" max="18" step="1" value="9">&lt;/num-stepper&gt;
+</pre>
+
+<p>Get the current value from the element value attribute:</p>
+<pre>
+document.querySelector('num-stepper').getAttribute('value')
+</pre>
+
+<p>Listen for <em>ready</em> and <em>change</em> events to get the selected value.</p>
+<pre>
+var exampleStepper = document.querySelector('num-stepper');
+
+exampleStepper.addEventListener('ready', function(e) {
+	console.log("initialized with value: " + e.detail.value);
+});
+
+exampleStepper.addEventListener('change', function(e) {
+	console.log("changed with value: " + e.detail.value);
+});
+</pre>
+
+<script type="text/javascript">
+
+var debug = document.querySelector('.debug');
+var exampleStepper = document.querySelector('num-stepper');
+
+exampleStepper.addEventListener('ready', function(e) {
+	debug.innerHTML = e.detail.value;
+});
+
+exampleStepper.addEventListener('change', function(e) {
+	debug.innerHTML = e.detail.value;
+});
+
+</script>
+
+</body>
+</html>
